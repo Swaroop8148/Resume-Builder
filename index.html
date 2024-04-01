@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom styles */
+        body {
+            padding-top: 50px;
+        }
+        .container {
+            max-width: 800px;
+            
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mb-5">Resume Builder</h1>
+
+    <!-- Form for user input -->
+    <form id="resumeForm">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" class="form-control" id="fullName" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="education">Education</label>
+            <textarea class="form-control" id="education" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="workExperience">Work Experience</label>
+            <textarea class="form-control" id="workExperience" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="skills">Skills</label>
+            <textarea class="form-control" id="skills" rows="3" required></textarea>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="previewResume()">Preview</button>
+        <button type="button" class="btn btn-success" onclick="downloadResume()">Download</button>
+    </form>
+
+    <!-- Preview section -->
+    <div id="previewSection" class="mt-5" style="display: none;">
+        <h2>Preview</h2>
+        <div id="previewContent"></div>
+    </div>
+</div>
+
+<script>
+    function previewResume() {
+        // Get form data
+        var fullName = document.getElementById('fullName').value;
+        var email = document.getElementById('email').value;
+        var education = document.getElementById('education').value;
+        var workExperience = document.getElementById('workExperience').value;
+        var skills = document.getElementById('skills').value;
+
+        // Build preview HTML
+        var previewHtml = `
+            <p><strong>Name:</strong> ${fullName}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Education:</strong><br>${education}</p>
+            <p><strong>Work Experience:</strong><br>${workExperience}</p>
+            <p><strong>Skills:</strong><br>${skills}</p>
+        `;
+
+        // Display preview
+        document.getElementById('previewContent').innerHTML = previewHtml;
+        document.getElementById('previewSection').style.display = 'block';
+    }
+
+    function downloadResume() {
+        // Get preview content
+        var previewContent = document.getElementById('previewContent').innerHTML;
+
+        // For simplicity, just open the content in a new window
+        var newWindow = window.open();
+        newWindow.document.write('<html><head><title>Resume</title></head><body>');
+        newWindow.document.write('<h1>Resume</h1>');
+        newWindow.document.write(previewContent);
+        newWindow.document.write('</body></html>');
+        newWindow.document.close();
+
+        // Focus the new window
+        newWindow.focus();
+    }
+</script>
+
+</body>
+</html>
